@@ -1,0 +1,1 @@
+np.array(list(readline().rstrip().decode()), np.int64).astype(object)#文字列入力をnp.int64のリストにして受け取る
