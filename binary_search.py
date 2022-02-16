@@ -7,3 +7,12 @@ def binary_search(sorted_list, index):
         else: lo = mid+1
     return lo
 
+
+#めぐる式
+def bs(array, index):
+    lo, hi = -1, len(array)
+    while abs(hi-lo)>1:
+        mid = (lo+hi)//2
+        if is_ok(mid, index): hi = mid
+        else: lo = mid
+    return hi
