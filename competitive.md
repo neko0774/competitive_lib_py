@@ -1,0 +1,4 @@
+- float to int
+- ans%mod
+- check constraints -> if something is small -> brute force with that??
+- check code with the rare situation (e.g. N=1, K=1, N=10**9. etc)
