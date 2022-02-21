@@ -1,7 +1,15 @@
 class BIT:
-  def __init__(self, N):
+  #1th index
+  def __init__(self, N, A=None):
     self.size = N
     self.data = [0]*(N+1)
+    if A:
+      for i in range(N):
+        self.add(i+1, A[i])
+
+  def rsum(self, l, r):
+    return self.sum(l)-self.sum(r)
+
   
 
   def sum(self, r):
