@@ -1,9 +1,6 @@
-inf = 10**18
-
-
 #pypy may be better
 #if compare func is min
-inital_value = 10**18
+initial_value = 10**18
 #if compare function is max/gcd
 #initial_value = 0
 class SegTree:
@@ -17,7 +14,7 @@ class SegTree:
       for i in range(N):
         self.tree[self.n//2+i] = array[i]
       for i in range(self.n//2-1,0,-1):
-        self.tree[i] = compare(self.tree[2*i+1], self.tree[2*i+2])
+        self.tree[i] = self.compare(self.tree[2*i+1], self.tree[2*i+2])
 
   def update(self, i, v):
     #0 index
@@ -29,10 +26,11 @@ class SegTree:
       self.tree[i] = self.compare(self.tree[2*i+1], self.tree[2*i+2]) 
   
   def get(self, l, r, k=0, ll=0, rr=None):
+    #0 index
     #return the value of the "compare" in [l, r)
     if rr==None:
       rr=self.size
-    if rr<=l or r<=ll: return inf
+    if rr<=l or r<=ll: return initial_value
     if l<=ll and rr<=r: return self.tree[k]
     else:
       left = self.get(l, r, 2*k+1, ll, (ll+rr)//2)
