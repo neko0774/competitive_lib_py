@@ -1,16 +1,22 @@
 inf = 10**18
 
+
+#pypy may be better
+#if compare func is min
+inital_value = 10**18
+#if compare function is max/gcd
+#initial_value = 0
 class SegTree:
   def __init__(self, N, array=None):
     self.size = 1
     while self.size < N:
       self.size *= 2
     self.n = self.size*2-1
-    self.tree = [inf]*(self.n)
+    self.tree = [initial_value]*(self.n)
     if array!=None:
-      for i in range(n):
-        self.tree[n+i] = array[i]
-      for i in range(n-1,0,-1):
+      for i in range(N):
+        self.tree[self.n//2+i] = array[i]
+      for i in range(self.n//2-1,0,-1):
         self.tree[i] = compare(self.tree[2*i+1], self.tree[2*i+2])
 
   def update(self, i, v):
@@ -22,15 +28,15 @@ class SegTree:
       i = (i-1)//2
       self.tree[i] = self.compare(self.tree[2*i+1], self.tree[2*i+2]) 
   
-  def query(self, l, r, k=0, ll=0, rr=None):
+  def get(self, l, r, k=0, ll=0, rr=None):
     #return the value of the "compare" in [l, r)
     if rr==None:
       rr=self.size
     if rr<=l or r<=ll: return inf
     if l<=ll and rr<=r: return self.tree[k]
     else:
-      left = self.query(l, r, 2*k+1, ll, (ll+rr)//2)
-      right = self.query(l, r, 2*k+2, (ll+rr)//2, rr)
+      left = self.get(l, r, 2*k+1, ll, (ll+rr)//2)
+      right = self.get(l, r, 2*k+2, (ll+rr)//2, rr)
       return self.compare(left, right) 
 
   def compare(self, a, b):
