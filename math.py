@@ -46,19 +46,27 @@ def sort_divisions(number):#約数列挙
 def common_divisinors(x, y):
     return set(sort_divisions(x))&set(sort_divisions(y))
 
-def comb(x,y):
-  ans = 1
-  y = min(y, x-y)
-  for i in range(1,x-y+1):
-    ans *= (x-i+1)
-    ans //= i
-  return ans
+fac = [0]*2*10**5
+finv = [0]*2*10**5
+inv = [0]*2*10**5
+fac[0] = fac[1] = 1
+finv[0] = finv[1] = 1
+inv[1] = 1
+for i in range(2, 2*10**5):
+    fac[i] = fac[i-1]*i%mod
+    inv[i] = mod-inv[mod%i]*(mod//i)%mod
+    finv[i] = finv[i-1]*inv[i]%mod
 
+
+def comb(a, b, p=10**9+7):
+    if a<b: return 0
+    elif a<0 or b<0: return 0
+    return fac[a]*(finv[b]*finv[a-b]%p)%p
 
 def comb(n, k):#with mod
-	a = 1
-  b = 1
-  for i in range(k):
-    a = a*(n-i)%mod
-    b = b*(i+1)%mod
-  return a * pow(b, mod-2, mod)%mod
+    a = 1
+    b = 1
+    for i in range(k):
+        a = a*(n-i)%mod
+        b = b*(i+1)%mod
+    return a * pow(b, mod-2, mod)%mod
