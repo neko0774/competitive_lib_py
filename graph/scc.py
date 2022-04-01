@@ -25,3 +25,21 @@ def scc(G, rG):
 			rdfs(i)
 			cycles.append(groups)
 	return cycles
+
+
+N, M = map(int, input().split())
+G = [[] for _ in range(N)]
+rG = [[] for _ in range(N)]
+for _ in range(M):
+	A, B = map(int, input().split())
+	G[A].append(B)
+	rG[B].append(B)
+
+s = scc(G, rG)
+print(len(s))
+for i in s:
+	print(len(i), *i)
+#ref
+#https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/3/GRL_3_C
+#ref
+#https://judge.yosupo.jp/problem/scc
