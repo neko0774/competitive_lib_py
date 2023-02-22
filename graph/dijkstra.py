@@ -1,5 +1,5 @@
 from heapq import heappush, heappop
-inf = 10**9
+inf = 10**18
 
 def dijkstra(s, G, node=None):#s = start, n = number of the node
 	if node==None: node = len(G)

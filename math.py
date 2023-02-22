@@ -1,4 +1,4 @@
-#is_prime l9
+#s_prime l9
 #factorization l21
 #sort_divisions l36
 #commmon_division l46
@@ -58,6 +58,9 @@ for i in range(2, 2*10**5):
     finv[i] = finv[i-1]*inv[i]%mod
 
 
+def inv_mod(x,p=mod):
+    return pow(x,p-2,p)
+
 def comb(a, b, p=10**9+7):
     if a<b: return 0
     elif a<0 or b<0: return 0
@@ -70,3 +73,14 @@ def comb(n, k):#with mod
         a = a*(n-i)%mod
         b = b*(i+1)%mod
     return a * pow(b, mod-2, mod)%mod
+
+
+def osak(x):
+    t = [0]*(x+1)
+    for n in range(2, x+1):
+        if t[n]!=0: continue
+        t[n] = 1
+        for nn in range(2*n, x+1, n):
+            t[nn] = n
+    return t
+            
