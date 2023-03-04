@@ -33,9 +33,10 @@ def factorization(x):
     return ans
 
 
-def sort_divisions(number):#約数列挙
+def sort_divisions(number)->list:#約数列挙
+    if number==1: return 1
     i = 2
-    front, back = [],[number]
+    front, back = [1],[number]
     while i*i <= number:
         if number%i==0:
             front.append(i)
