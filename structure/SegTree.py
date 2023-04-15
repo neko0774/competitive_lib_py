@@ -1,45 +1,37 @@
-#pypy may be better
-#if compare func is min
-initial_value = 10**18
-#if compare function is max/gcd
-#initial_value = 0
 class SegTree:
-	def __init__(self, N, array=None):
-		self.size = 1
-		while self.size < N:
-			self.size *= 2
-		self.n = self.size*2-1
-		self.tree = [initial_value]*(self.n)
-		if array!=None:
-			for i in range(N):
-				self.tree[self.n//2+i] = array[i]
-			for i in range(self.n//2-1,0,-1):
-				self.tree[i] = self.compare(self.tree[2*i+1], self.tree[2*i+2])
+	#in the implementation of segment tree its 1-indexed 
+	#but in use case, it is 0-indexed
+	def __init__(self, N, func, e=0):
+		self._e = e
+		self._func = func
+		self._n = 1<<(N.bit_length())
+		self.array = [e]*(self._n*2)
 
-	def update(self, i, v):
-		#0 index
-		# update ith value to v
-		i += self.size-1
-		self.tree[i] = v
-		while i>0:
-			i = (i-1)//2
-			self.tree[i] = self.compare(self.tree[2*i+1], self.tree[2*i+2]) 
+	def build(self, seq):
+		for i, x in enumerate(seq):
+			self.array[i+self._n] = x
+		for i in range(1, self._n)[::-1]:
+			self.array[i] = self._func(self.array[2*i], self.array[2*i+1])
 	
-	def get(self, l, r, k=0, ll=0, rr=None):
-		#0 index
-		#return the value of the "compare" in [l, r)
-		if rr==None:
-			rr=self.size
-		if rr<=l or r<=ll: return initial_value
-		if l<=ll and rr<=r: return self.tree[k]
-		else:
-			left = self.get(l, r, 2*k+1, ll, (ll+rr)//2)
-			right = self.get(l, r, 2*k+2, (ll+rr)//2, rr)
-			return self.compare(left, right) 
-
-	def compare(self, a, b):
-		#the condition to return
-		#such as min, max, gcd, etc
-		return 
-		
-
+	def update(self, i, x):
+		i += self._n
+		self.array[i] = x
+		while i>1:
+			i //= 2
+			self.array[i] = self._func(self.array[2*i], self.array[2*i+1])
+	
+	def fold(self, l, r):
+		l += self._n
+		r += self._n
+		vl = self._e
+		vr = self._e
+		while r-l>0:
+			if r&1:
+				r -= 1
+				vr = self._func(vr, self.array[r])
+			if l&1:
+				vl = self._func(vl, self.array[l])
+				l += 1
+			r //= 2
+			l //= 2
+		return self._func(vl, vr)

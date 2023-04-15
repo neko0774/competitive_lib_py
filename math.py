@@ -34,7 +34,7 @@ def factorization(x):
 
 
 def sort_divisions(number)->list:#約数列挙
-    if number==1: return 1
+    if number==1: return [1]
     i = 2
     front, back = [1],[number]
     while i*i <= number:
