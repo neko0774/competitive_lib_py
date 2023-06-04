@@ -25,7 +25,7 @@ class UnionFind:
 		if size[x] < size[y]:
 			x, y = y, x
 		root[y] = root[x]
-		size[x] += size[y]
+		size[y] += size[x]
 	
 	def is_same(self, x, y):
 		return self.find_root(x)==self.find_root(y)

@@ -35,3 +35,9 @@ class SegTree:
 			r //= 2
 			l //= 2
 		return self._func(vl, vr)
+
+	def all_fold(self):
+		return self.array[1]
+	
+	def get(self, i):
+		return self.array[i+self._n]
