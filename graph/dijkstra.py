@@ -8,8 +8,9 @@ def dijkstra(s, G, node=None):#s = start, n = number of the node
 	seen = [False]*node
 	cost[s] = 0
 	while hq:
-		v = heappop(hq)[1]
+		d, v = heappop(hq)
 		seen[v] = True
+		if d<cost[v]: continue
 		for to, weight in G[v]:
 			if not seen[to] and cost[v] + weight < cost[to]:
 				cost[to] = cost[v] + weight
